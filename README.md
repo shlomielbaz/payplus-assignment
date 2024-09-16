@@ -2,11 +2,14 @@
 
 | Methods	| Urls	                | Actions
 | --------- | --------------------- | ---------------------- |
-| GET       | api/users         | get all Users
-| GET       | api/users/:id     | get User by id
-| POST      | api/users         | add new User
-| PUT       | api/users/:id     | update User by id
-| DELETE    | api/users/:id     | remove User by id
+| GET       | api/v1/users         | get all Users
+| GET       | api/v1/users/:id     | get User by id
+| POST      | api/v1/users         | add new User
+| PUT       | api/v1/users/:id     | update User by id
+| DELETE    | api/v1/users/:id     | remove User by id
+| POST      | api/v1/users         | add new User
+| POST      | api/v1/auth/login    | user login
+| POST      | api/v1/auth/register | user register
 
 ## users DDL stetment
 ```SQL
