@@ -1,20 +1,12 @@
-# Rest API with MySQL 
+# PayPlus assignment
 
 | Methods	| Urls	                | Actions
 | --------- | --------------------- | ---------------------- |
-| GET       | api/tutorials         | get all Tutorials
-| GET       | api/tutorials/:id     | get Tutorial by id
-| POST      | api/tutorials         | add new Tutorial
-| PUT       | api/tutorials/:id     | update Tutorial by id
-| DELETE    | api/tutorials/:id     | remove Tutorial by id
-
-| Methods	| Urls	                | Actions
-| --------- | --------------------- | ---------------------- |
-| GET       | api/employees         | get all Employees
-| GET       | api/employees/:id     | get Employee by id
-| POST      | api/employees         | add new Employee
-| PUT       | api/employees/:id     | update Employee by id
-| DELETE    | api/employees/:id     | remove Employee by id
+| GET       | api/users         | get all Users
+| GET       | api/users/:id     | get User by id
+| POST      | api/users         | add new User
+| PUT       | api/users/:id     | update User by id
+| DELETE    | api/users/:id     | remove User by id
 
 ## users DDL stetment
 ```SQL
