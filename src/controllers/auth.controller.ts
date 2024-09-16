@@ -44,7 +44,7 @@ export default class AuthController {
       const user: User = req.body;
       const hashedPassword = await bcrypt.hash(user.password, 10);
       const savedUser = await userService.create({...user, password: hashedPassword, 
-        confirmPassword: null});
+        confirmPassword: undefined});
 
       res.status(201).send(savedUser);
     } catch (err) {

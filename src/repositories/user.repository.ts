@@ -8,6 +8,7 @@ class UserRepository implements ICrudRepository<User> {
   filterBy(searchParams: any): Promise<User[]> {
     throw new Error("Method not implemented.");
   }
+  
   save(user: User): Promise<User> {
     return new Promise((resolve, reject) => {
       // need to encrypt the password before inserting
