@@ -1,4 +1,4 @@
-# Rest API with MySQL 
+# PayPlus assignment
 
 | Methods	| Urls	                | Actions
 | --------- | --------------------- | ---------------------- |
