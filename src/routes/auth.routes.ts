@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { isValidLogin, isValidRegister } from "../middlewares/auth.validation";
+import { isAuth, isValidLogin, isValidRegister } from "../middlewares/auth.validation";
 import AuthController from "../controllers/auth.controller";
 
 

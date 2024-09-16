@@ -8,27 +8,29 @@ export function isAuth(req: Request, res: Response<any>, next: NextFunction) {
 
 export function isValidLogin(req: Request, res: Response<any>, next: NextFunction) {
   const { idNo } = req.body;
-  if (/\d{9}/.test(idNo)) {
-    next();
-  }
-  else {
-    // throw Error('ID number must be 9 digits')
+  if (!/\d{9}/.test(idNo)) {
     res.status(401).send({
       message: "ID number must be 9 digits",
     });
+  }
+  else {
+     next();
   }
 }
 
 export function isValidRegister(req: Request, res: Response<any>, next: NextFunction) {
   const { password, confirmPassword, idNo } = req.body;
-
-  if (password === confirmPassword && /\d{9}/.test(idNo)) {
-    next();
+  if (!/\d{9}/.test(idNo)) {
+    res.status(401).send({
+      message: "ID number must be 9 digits",
+    });
   }
-  else {
-    // throw Error('password and confirm password not identical! ')
+  if (password !== confirmPassword) {
     res.status(401).send({
       message: "password and confirm password not identical!",
     });
+  }
+  else {
+    next();
   }
 }
