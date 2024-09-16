@@ -2,11 +2,11 @@
 
 | Methods	| Urls	                | Actions
 | --------- | --------------------- | ---------------------- |
-| GET       | api/users         | get all Tutorials
-| GET       | api/users/:id     | get Tutorial by id
-| POST      | api/users         | add new Tutorial
-| PUT       | api/users/:id     | update Tutorial by id
-| DELETE    | api/users/:id     | remove Tutorial by id
+| GET       | api/users         | get all Users
+| GET       | api/users/:id     | get User by id
+| POST      | api/users         | add new User
+| PUT       | api/users/:id     | update User by id
+| DELETE    | api/users/:id     | remove User by id
 
 
 ## Project Structure
