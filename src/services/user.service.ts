@@ -31,6 +31,10 @@ class UserService {
   async findAllPublished(): Promise<User[]> {
     return await userRepository.retrieveAll();
   }
+
+  async findBy(field: string, value: string): Promise<User> {
+    return await userRepository.findBy(field, value);
+  }
 }
 
 export default new UserService();

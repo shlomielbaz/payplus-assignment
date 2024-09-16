@@ -10,9 +10,10 @@ class UserRepository implements ICrudRepository<User> {
   }
   save(user: User): Promise<User> {
     return new Promise((resolve, reject) => {
+      // need to encrypt the password before inserting
       connection.query<OkPacket>(
-        "INSERT INTO users (title, salary ) VALUES(?,?)",
-        [user.title, user.salary],
+        "INSERT INTO users (email, name, idNo, password, phone, birthDay) VALUES(?, ?, ?, ?, ?, ?);",
+        [user.email, user.name, user.idNo, user.password, user.phone, user.birthDay],
         (err, res) => {
           if (err) reject(err);
           else
@@ -57,8 +58,8 @@ class UserRepository implements ICrudRepository<User> {
   update(user: User): Promise<number> {
     return new Promise((resolve, reject) => {
       connection.query<OkPacket>(
-        "UPDATE users SET title = ?, salary = ? WHERE id = ?",
-        [user.title, user.salary, user.id],
+        "UPDATE users SET email = ?, name = ?, idNo = ?, password = ?, phone = ?, birthDay = ? WHERE id = ?",
+        [user.email, user.name, user.idNo, user.password, user.phone, user.birthDay],
         (err, res) => {
           if (err) reject(err);
           else resolve(res.affectedRows);
@@ -86,6 +87,19 @@ class UserRepository implements ICrudRepository<User> {
         if (err) reject(err);
         else resolve(res.affectedRows);
       });
+    });
+  }
+
+  findBy(field: string, value: string): Promise<User> {
+    return new Promise((resolve, reject) => {
+      connection.query<User[]>(
+        `SELECT * FROM users WHERE ${field} = ?`,
+        [value],
+        (err, res) => {
+          if (err) reject(err);
+          else resolve(res?.[0]);
+        }
+      );
     });
   }
 }

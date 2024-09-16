@@ -4,7 +4,7 @@ import User from "../models/user.model";
 
 export default class UserController {
   async create(req: Request, res: Response) {
-    if (!req.body.title) {
+    if (!req.body) {
       res.status(400).send({
         message: "Content can not be empty!",
       });
@@ -18,7 +18,7 @@ export default class UserController {
       res.status(201).send(savedUser);
     } catch (err) {
       res.status(500).send({
-        message: "Some error occurred while retrieving users.",
+        message: "Some error occurred while creating user.",
       });
     }
   }

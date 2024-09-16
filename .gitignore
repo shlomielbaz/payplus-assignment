@@ -42,3 +42,4 @@ jspm_packages
 # Configuration files
 # Uncomment this when you put your admin information in your config file
 # config/database.js
+package-lock.json
