@@ -13,7 +13,7 @@ export default class UserController {
 
     try {
       const user: User = req.body;
-      const savedUser = await userService.create(user);
+      const savedUser = await userService.add(user);
 
       res.status(201).send(savedUser);
     } catch (err) {
@@ -24,10 +24,9 @@ export default class UserController {
   }
 
   async findAll(req: Request, res: Response) {
-    const title = typeof req.query.title === "string" ? req.query.title : "";
-
+    //const title = typeof req.query.title === "string" ? req.query.title : "";
     try {
-      const users = await userService.findAll(title);
+      const users = await userService.getAll();
 
       res.status(200).send(users);
     } catch (err) {
@@ -41,7 +40,7 @@ export default class UserController {
     const id: number = parseInt(req.params.id);
 
     try {
-      const user = await userService.findOne(id);
+      const user = await userService.getById(id);
 
       if (user) res.status(200).send(user);
       else

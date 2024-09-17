@@ -5,11 +5,7 @@ import ICrudRepository from "../interfaces/crud-repository.interface";
 import User from "../models/user.model";
 
 class UserRepository implements ICrudRepository<User> {
-  filterBy(searchParams: any): Promise<User[]> {
-    throw new Error("Method not implemented.");
-  }
-  
-  save(user: User): Promise<User> {
+  add(user: User): Promise<User> {
     return new Promise((resolve, reject) => {
       // need to encrypt the password before inserting
       connection.query<OkPacket>(
@@ -18,7 +14,7 @@ class UserRepository implements ICrudRepository<User> {
         (err, res) => {
           if (err) reject(err);
           else
-            this.retrieveById(res.insertId)
+            this.getById(res.insertId)
               .then((user) => resolve(user!))
               .catch(reject);
         }
@@ -26,7 +22,7 @@ class UserRepository implements ICrudRepository<User> {
     });
   }
 
-  retrieveAll(): Promise<User[]> {
+  getAll(): Promise<User[]> {
     let query: string = "SELECT * FROM users";
     // let condition: string = "";
 
@@ -43,7 +39,7 @@ class UserRepository implements ICrudRepository<User> {
     });
   }
 
-  retrieveById(id: number): Promise<User> {
+  getById(id: number): Promise<User> {
     return new Promise((resolve, reject) => {
       connection.query<User[]>(
         "SELECT * FROM users WHERE id = ?",
@@ -91,14 +87,33 @@ class UserRepository implements ICrudRepository<User> {
     });
   }
 
-  findBy(field: string, value: string): Promise<User> {
+  // findBy(field: string, value: string): Promise<User> {
+  //   return new Promise((resolve, reject) => {
+  //     connection.query<User[]>(
+  //       `SELECT * FROM users WHERE ${field} = ?`,
+  //       [value],
+  //       (err, res) => {
+  //         if (err) reject(err);
+  //         else resolve(res?.[0]);
+  //       }
+  //     );
+  //   });
+  // }
+
+  filterBy(searchParams: Partial<User>): Promise<User[]> {
+    const keys: string[] = [];
+    const values: string[] = [];
+    for (const key in searchParams) {
+      keys.push(key)
+      values.push(searchParams[key])
+    }
     return new Promise((resolve, reject) => {
       connection.query<User[]>(
-        `SELECT * FROM users WHERE ${field} = ?`,
-        [value],
+        `SELECT * FROM users WHERE ${keys.join(' = ?, ')} = ?`,
+        values,
         (err, res) => {
           if (err) reject(err);
-          else resolve(res?.[0]);
+          else resolve(res);
         }
       );
     });

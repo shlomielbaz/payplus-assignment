@@ -5,19 +5,13 @@ const bcrypt = require('bcrypt');
 
 export default class AuthController {
   async login(req: Request, res: Response) {
-    if (!req.body) {
-      res.status(400).send({
-        message: "Content can not be empty!",
-      });
-      return;
-    }
-
     try {
       const { idNo, password } = req.body;
-      const user = await userService.findBy('idNo', idNo);
-      const isTrue = await bcrypt.compare(password, user.password);
+      const users = await userService.filterBy({ 'idNo': idNo } as Partial<User>);
+      const user = users[0];
+      const isTrue = user && await bcrypt.compare(password, user.password) || false;
 
-      if (!user || !isTrue) {
+      if (!isTrue) {
         res.status(401).send({
           message: "Invalid id number or password",
         });
@@ -28,28 +22,20 @@ export default class AuthController {
       }
     } catch (err) {
       res.status(500).send({
-        message: "Some error occurred while creating user.",
+        message: "Some error occurred while login user.",
       });
     }
   }
+
   async register(req: Request, res: Response) {
-    if (!req.body) {
-      res.status(400).send({
-        message: "Content can not be empty!",
-      });
-      return;
-    }
-
     try {
-      const user: User = req.body;
-      const hashedPassword = await bcrypt.hash(user.password, 10);
-      const savedUser = await userService.create({...user, password: hashedPassword, 
-        confirmPassword: undefined});
-
+      const { password, idNo, email, name } = req.body;
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const savedUser = await userService.add({idNo: idNo, email: email, name: name, password: hashedPassword} as User);
       res.status(201).send(savedUser);
     } catch (err) {
       res.status(500).send({
-        message: "Some error occurred while creating user.",
+        message: "Some error occurred while registering user.",
       });
     }
   }
